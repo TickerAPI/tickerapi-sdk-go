@@ -48,7 +48,7 @@ type ValuationSeverity string
 
 const (
 	ValuationSeverityDeepValue      ValuationSeverity = "deep_value"
-	ValuationSeverityExtremePremium ValuationSeverity = "extreme_premium"
+	ValuationSeverityDeeplyOvervalued ValuationSeverity = "deeply_overvalued"
 )
 
 // VolumeRatioBand represents volume ratio classification.
@@ -58,7 +58,7 @@ const (
 	VolumeRatioBandExtremelyLow  VolumeRatioBand = "extremely_low"
 	VolumeRatioBandLow           VolumeRatioBand = "low"
 	VolumeRatioBandNormal        VolumeRatioBand = "normal"
-	VolumeRatioBandElevated      VolumeRatioBand = "elevated"
+	VolumeRatioBandAboveAverage  VolumeRatioBand = "above_average"
 	VolumeRatioBandHigh          VolumeRatioBand = "high"
 	VolumeRatioBandExtremelyHigh VolumeRatioBand = "extremely_high"
 )
@@ -118,7 +118,7 @@ type ScanValuationOptions struct {
 	Timeframe   *Timeframe         `json:"timeframe,omitempty"`
 	Sector      *string            `json:"sector,omitempty"`
 	Direction   *Direction         `json:"direction,omitempty"`   // "undervalued", "overvalued", "all"
-	MinSeverity *ValuationSeverity `json:"min_severity,omitempty"` // "deep_value", "extreme_premium"
+	MinSeverity *ValuationSeverity `json:"min_severity,omitempty"` // "deep_value", "deeply_overvalued"
 	SortBy      *string            `json:"sort_by,omitempty"`     // "valuation_percentile", "pe_vs_history"
 	Limit       *int               `json:"limit,omitempty"`       // 1-50
 	Date        *string            `json:"date,omitempty"`
