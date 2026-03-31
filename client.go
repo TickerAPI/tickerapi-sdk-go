@@ -151,6 +151,17 @@ func (c *Client) Assets(ctx context.Context) (*AssetsResponse, error) {
 	return resp, nil
 }
 
+// ListSectors retrieves all valid sector values with asset counts.
+func (c *Client) ListSectors(ctx context.Context) (*SectorsResponse, error) {
+	resp := &SectorsResponse{}
+	rateLimits, err := c.doGet(ctx, "/list/sectors", nil, resp)
+	if err != nil {
+		return nil, err
+	}
+	resp.RateLimits = rateLimits
+	return resp, nil
+}
+
 // ScanOversold retrieves oversold assets matching the given criteria.
 func (c *Client) ScanOversold(ctx context.Context, opts *ScanOversoldOptions) (*ScanOversoldResponse, error) {
 	params := url.Values{}

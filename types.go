@@ -192,6 +192,19 @@ type AssetsResponse struct {
 	RateLimits RateLimits      `json:"-"`
 }
 
+// SectorEntry represents a single sector with its asset count.
+type SectorEntry struct {
+	Name       string `json:"name"`
+	AssetCount int    `json:"asset_count"`
+}
+
+// SectorsResponse is the response from the ListSectors endpoint.
+type SectorsResponse struct {
+	Sectors      []SectorEntry `json:"sectors"`
+	TotalSectors int           `json:"total_sectors"`
+	RateLimits   RateLimits    `json:"-"`
+}
+
 // ScanOversoldResponse is the response from the ScanOversold endpoint.
 type ScanOversoldResponse struct {
 	Data       json.RawMessage `json:"data"`
