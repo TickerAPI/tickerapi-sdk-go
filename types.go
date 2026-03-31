@@ -163,11 +163,17 @@ type WatchlistChangesOptions struct {
 	Timeframe *Timeframe
 }
 
+// TickerContext holds per-ticker metadata in the watchlist changes response.
+type TickerContext struct {
+	LastChangedDate *string `json:"last_changed_date"`
+}
+
 // WatchlistChangesResponse is the response from the WatchlistChanges endpoint.
 type WatchlistChangesResponse struct {
 	Timeframe      string                          `json:"timeframe"`
 	RunDate        *string                         `json:"run_date"`
 	Changes        map[string][]WatchlistChangeDiff `json:"changes"`
+	TickerContext  map[string]TickerContext          `json:"ticker_context"`
 	TickersChecked int                              `json:"tickers_checked"`
 	TickersChanged int                              `json:"tickers_changed"`
 	RateLimits     RateLimits                       `json:"-"`
