@@ -162,6 +162,39 @@ func (c *Client) ListSectors(ctx context.Context) (*SectorsResponse, error) {
 	return resp, nil
 }
 
+// ListEvents searches for historical band transition events for a ticker.
+// ticker and field are required; opts may be nil for defaults.
+func (c *Client) ListEvents(ctx context.Context, ticker, field string, opts *ListEventsOptions) (*ListEventsResponse, error) {
+	params := url.Values{}
+	params.Set("ticker", ticker)
+	params.Set("field", field)
+	if opts != nil {
+		if opts.Timeframe != nil {
+			params.Set("timeframe", string(*opts.Timeframe))
+		}
+		if opts.Band != nil {
+			params.Set("band", *opts.Band)
+		}
+		if opts.Limit != nil {
+			params.Set("limit", strconv.Itoa(*opts.Limit))
+		}
+		if opts.Before != nil {
+			params.Set("before", *opts.Before)
+		}
+		if opts.After != nil {
+			params.Set("after", *opts.After)
+		}
+	}
+
+	resp := &ListEventsResponse{}
+	rateLimits, err := c.doGet(ctx, "/events", params, resp)
+	if err != nil {
+		return nil, err
+	}
+	resp.RateLimits = rateLimits
+	return resp, nil
+}
+
 // ScanOversold retrieves oversold assets matching the given criteria.
 func (c *Client) ScanOversold(ctx context.Context, opts *ScanOversoldOptions) (*ScanOversoldResponse, error) {
 	params := url.Values{}

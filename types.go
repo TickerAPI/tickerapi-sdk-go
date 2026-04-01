@@ -80,6 +80,42 @@ type WatchlistOptions struct {
 	Timeframe *Timeframe `json:"timeframe,omitempty"`
 }
 
+// ListEventsOptions configures optional parameters for ListEvents.
+// The required ticker and field are passed as separate arguments.
+type ListEventsOptions struct {
+	Timeframe *Timeframe `json:"timeframe,omitempty"`
+	Band      *string    `json:"band,omitempty"`
+	Limit     *int       `json:"limit,omitempty"`
+	Before    *string    `json:"before,omitempty"`
+	After     *string    `json:"after,omitempty"`
+}
+
+// EventEntry represents a single band transition event.
+type EventEntry struct {
+	Date          string                           `json:"date"`
+	Band          string                           `json:"band"`
+	PrevBand      string                           `json:"prev_band"`
+	DurationDays  *int                             `json:"duration_days,omitempty"`
+	DurationWeeks *int                             `json:"duration_weeks,omitempty"`
+	Aftermath     map[string]*AftermathPerformance `json:"aftermath"`
+}
+
+// AftermathPerformance holds the performance band for an aftermath window.
+type AftermathPerformance struct {
+	Performance string `json:"performance"`
+}
+
+// ListEventsResponse is returned by ListEvents.
+type ListEventsResponse struct {
+	Ticker           string       `json:"ticker"`
+	Field            string       `json:"field"`
+	Timeframe        string       `json:"timeframe"`
+	Events           []EventEntry `json:"events"`
+	TotalOccurrences int          `json:"total_occurrences"`
+	QueryRange       string       `json:"query_range"`
+	RateLimits       RateLimits   `json:"-"`
+}
+
 // ScanOversoldOptions configures the ScanOversold request.
 type ScanOversoldOptions struct {
 	Timeframe   *Timeframe        `json:"timeframe,omitempty"`
