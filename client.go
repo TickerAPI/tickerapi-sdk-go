@@ -184,6 +184,15 @@ func (c *Client) ListEvents(ctx context.Context, ticker, field string, opts *Lis
 		if opts.After != nil {
 			params.Set("after", *opts.After)
 		}
+		if opts.ContextTicker != nil {
+			params.Set("context_ticker", *opts.ContextTicker)
+		}
+		if opts.ContextField != nil {
+			params.Set("context_field", *opts.ContextField)
+		}
+		if opts.ContextBand != nil {
+			params.Set("context_band", *opts.ContextBand)
+		}
 	}
 
 	resp := &ListEventsResponse{}

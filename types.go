@@ -88,6 +88,13 @@ type ListEventsOptions struct {
 	Limit     *int       `json:"limit,omitempty"`
 	Before    *string    `json:"before,omitempty"`
 	After     *string    `json:"after,omitempty"`
+	// Cross-asset correlation: a second ticker to filter against (e.g. "SPY").
+	// Requires ContextField and ContextBand. Plus/Pro only. Costs 2 credits.
+	ContextTicker *string `json:"context_ticker,omitempty"`
+	// Band field to check on the context ticker (e.g. "trend_direction").
+	ContextField *string `json:"context_field,omitempty"`
+	// Only return events where the context ticker was in this band on the event date.
+	ContextBand *string `json:"context_band,omitempty"`
 }
 
 // EventEntry represents a single band transition event.
@@ -105,15 +112,23 @@ type AftermathPerformance struct {
 	Performance string `json:"performance"`
 }
 
+// EventsContext describes the cross-asset correlation filter applied.
+type EventsContext struct {
+	Ticker string `json:"ticker"`
+	Field  string `json:"field"`
+	Band   string `json:"band"`
+}
+
 // ListEventsResponse is returned by ListEvents.
 type ListEventsResponse struct {
-	Ticker           string       `json:"ticker"`
-	Field            string       `json:"field"`
-	Timeframe        string       `json:"timeframe"`
-	Events           []EventEntry `json:"events"`
-	TotalOccurrences int          `json:"total_occurrences"`
-	QueryRange       string       `json:"query_range"`
-	RateLimits       RateLimits   `json:"-"`
+	Ticker           string         `json:"ticker"`
+	Field            string         `json:"field"`
+	Timeframe        string         `json:"timeframe"`
+	Events           []EventEntry   `json:"events"`
+	TotalOccurrences int            `json:"total_occurrences"`
+	QueryRange       string         `json:"query_range"`
+	Context          *EventsContext `json:"context,omitempty"`
+	RateLimits       RateLimits     `json:"-"`
 }
 
 // ScanOversoldOptions configures the ScanOversold request.
